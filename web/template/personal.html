@@ -52,11 +52,11 @@
 </div>
 <script type="text/javascript">
 $(function() {
-    var $iosDialog1 = $('#iosDialog1'),
+    var $iosDialog1 = $('#iosDialog1');
 
-        $('#dialogs').on('click', '.weui-dialog__btn', function() {
-            $(this).parents('.js_dialog').fadeOut(200);
-        });
+    $('#dialogs').on('click', '.weui-dialog__btn', function() {
+        $(this).parents('.js_dialog').fadeOut(200);
+    });
 
     $('#showIOSDialog1').on('click', function() {
         $iosDialog1.fadeIn(200);
