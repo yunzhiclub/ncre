@@ -11,31 +11,49 @@ module('wechatApp', [
 ]).
 config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
-    $stateProvider.state('home', {
-        url: '/home',
-        templateUrl: 'views/home.html',
-    }).state('home1', {
-        url: '/home1',
-        templateUrl: 'views/home1.html',
-    }).state('personal', {
-        url: '/personal',
-        templateUrl: 'views/personal.html',
-    }).state('tickets', {
-        url: '/tickets',
-        templateUrl: 'views/tickets.html',
-    }).state('score', {
-        url: '/score',
-        templateUrl: 'views/score.html',
-    }).state('notickets', {
-        url: '/notickets',
-        templateUrl: 'views/notickets.html',
-    }).state('noscore', {
-        url: '/noscore',
-        templateUrl: 'views/noscore.html',
-    }).state('login', {
+    $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
-    });
+        controller:function ($scope, $location) {
+            $scope.randomNext = function() {
+                var random = Math.floor(Math.random()*2);
+                if(random == 1){
+                    $location.path('tickets');
+                }
+                else{
+                    $location.path('notickets');
+                }
+            };
+        }
+    })
+    .state('tickets', {
+        url: '/tickets',
+        templateUrl: 'views/tickets.html',
+    })
+    .state('notickets', {
+        url: '/notickets',
+        templateUrl: 'views/notickets.html',
+    })
+    // .state('home', {
+    //     url: '/home',
+    //     templateUrl: 'views/home.html',
+    // })
+    // .state('home1', {
+    //     url: '/home1',
+    //     templateUrl: 'views/home1.html',
+    // })
+    // .state('personal', {
+    //     url: '/personal',
+    //     templateUrl: 'views/personal.html',
+    // })
+    // .state('score', {
+    //     url: '/score',
+    //     templateUrl: 'views/score.html',
+    // })
+    // .state('noscore', {
+    //     url: '/noscore',
+    //     templateUrl: 'views/noscore.html',
+    // });
 }).
 /*
 由于整个应用都会跟路由打交道所以把$state和$stateParams这两个对象放在$rootscope上，
