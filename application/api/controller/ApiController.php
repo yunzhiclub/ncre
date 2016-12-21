@@ -11,7 +11,7 @@ class ApiController extends Controller {
     static protected $defaultCode = 10001;
 
     /**
-     * 用户请求响应
+     * 用户请求响应(供子类统一使用进行数据返回)
      * @param    mix                    $data   array:返回数据 | int:返回错误码
      * @param    array                    $header header头信息
      * @return   json
@@ -38,6 +38,7 @@ class ApiController extends Controller {
                     $code = $this::$defaultCode;
                 }
 
+                // 依据错误码，拼接错误数据
                 $request = Request::instance();
                 $result = [
                     "request"       => $request->url(true),
@@ -45,7 +46,7 @@ class ApiController extends Controller {
                     "error"         => $this::$errors[$code][0] . ': ' . $message,         
                 ];
 
-            // 否则返回正确的信息
+            // 未传入错误码，则返回正确的信息
             } else {
                 $result = [
                     'data' => $data,
@@ -53,7 +54,7 @@ class ApiController extends Controller {
             }
         }
 
-        // 设置请求时间，并返回
+        // 设置请求时间，返回
         $result['time'] = $_SERVER['REQUEST_TIME'];
         $type     = $this->getResponseType();
         $response = Response::create($result, $type)->header($header);
@@ -104,6 +105,8 @@ class ApiController extends Controller {
         // 排除ThinkPHP的HTTP异常
         if ($e instanceof \think\exception\HttpResponseException) {
             throw $e;
+
+        // 日志记录异常trace，供出错后分析
         } else {
             Log::record('系统发生异常:' . $e->getTraceAsString());
             return $this->response(10003, $e->getMessage());

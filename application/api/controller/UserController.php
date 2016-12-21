@@ -9,12 +9,16 @@ class UserController extends ApiController {
     public function __construct(Request $request = null) {
         parent::__construct($request);
 
+        // 获取用户传入的openid
         $openid = Request::instance()->param('openid');
+
+        // 验证openid长度是否符合
         if (!UserModel::checkOpenidLength($openid)) {
             $this->response(20002);     // openid长度不正确
             return;
         }
 
+        // 获取用户实体
         $UserModel = UserModel::getUserModelByOpenid($openid);
     }
 
