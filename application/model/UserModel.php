@@ -11,7 +11,7 @@ class UserModel extends ModelModel {
         'id_card_num' => '',                // 身份证号
         'is_receive_message' => false,      // 是否接收推送消息
     ];
-    
+
     /**
      * 验证openid位数是否正确
      * @return   boolean true:正确 | false:错误
@@ -20,7 +20,12 @@ class UserModel extends ModelModel {
      */
     static public function checkOpenidLength($openid = '') {
         // 较验openid的长度
-        return true;   
+        if (strlen($openid) === 28) {
+            return true;   
+        } else {
+            return false;
+        }
+        
     }
 
     /**

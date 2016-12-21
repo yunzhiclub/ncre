@@ -43,7 +43,7 @@ class ApiController extends Controller {
                 $result = [
                     "request"       => $request->url(true),
                     "error_code"    => $code,
-                    "error"         => $this::$errors[$code][0] . ': ' . $message,         
+                    "error"         => $this::$errors[$code][0] . ': ' . $this::$errors[$code][1] . ': ' . $message,         
                 ];
 
             // 未传入错误码，则返回正确的信息
