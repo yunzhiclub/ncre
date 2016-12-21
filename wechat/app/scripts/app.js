@@ -17,7 +17,7 @@ config(function($stateProvider, $urlRouterProvider) {
         controller:function ($scope, $location) {
             $scope.randomNext = function() {
                 var random = Math.floor(Math.random()*2);
-                if(random == 1){
+                if(random === 1){
                     $location.path('tickets');
                 }
                 else{
@@ -33,7 +33,7 @@ config(function($stateProvider, $urlRouterProvider) {
     .state('notickets', {
         url: '/notickets',
         templateUrl: 'views/notickets.html',
-    })
+    });
     // .state('home', {
     //     url: '/home',
     //     templateUrl: 'views/home.html',
