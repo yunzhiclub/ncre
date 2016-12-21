@@ -2,7 +2,7 @@
 
 // 路由配置
 angular.
-module('educationApp', [
+module('wechatApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
