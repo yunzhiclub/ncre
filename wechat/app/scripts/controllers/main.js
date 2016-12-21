@@ -7,11 +7,11 @@
  * # MainCtrl
  * Controller of the wechatApp
  */
-angular.module('educationApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+angular.module('wechatApp')
+  .controller('MainCtrl', ['user', function (user) {
+        // 判断用户是否登录
+        if (!user.isLogin()) {
+            user.login();
+            return;
+        }
+  }]);
