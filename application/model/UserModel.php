@@ -37,12 +37,23 @@ class UserModel extends ModelModel {
      */
     static public function getUserModelByOpenid($openid = '') {
         // 查找数据库是否存在
-        
-        // 数据库中存在，则返回获取到的对象
-        
-        // 数据库中不存在，则调用app\wechat\service\UserService\getUserByOpenid;，获取用户的openid基本信息
-        // 将用户的openid信息存在数据表
-        // 用获取到的openid初始化对象，并返回
+        $UserModel = new UserModel;
+        $map['openid'] = $openid;
+        $User = $UserModel->where($map)->find();
+
+        if (is_null($User)) {
+            // 数据库中不存在，则调用app\wechat\service\UserService\getUserByOpenid;，获取用户的openid基本信息
+            $UserService = new UserService;
+            $user = $UserService->getUserByOpenid();
+            // 将用户的openid信息存在数据表
+            $User->openid = $user['openid'];
+            // 用获取到的openid初始化对象，并返回
+            $User->save();
+            return $User;
+        }else{
+            // 数据库中存在，则返回获取到的对象
+            return $User;
+        }
          
     }
 
