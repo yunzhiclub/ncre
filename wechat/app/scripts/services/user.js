@@ -20,7 +20,6 @@ angular.module('wechatApp')
         var url = config.apiUrl + 'user/';
         // 用户是否登陆
         var isLogin = function() {
-            return false;
             if (typeof getOpenid() === 'undefined') {
                 return false;
             } else if (getOpenid() === '') {
