@@ -30,10 +30,11 @@ class UserController extends ApiController {
      */
     public function setIDCardNum($IdCardNum = 0) {
         try {
+            $idcardnum = Request::instance()->param('idcardnum');
             // 校验身份证号
             // 对UserModel的id_card_num赋值，并保存
-
-            
+            $UserModel->idcardnum = $idcardnum;
+            $UserModel->save();
             // 成功设置，返回空数组
             return $this->response([]);
 
@@ -50,7 +51,9 @@ class UserController extends ApiController {
     public function setIsReceiveMessage($isReceiveMessage = 0) {
         try {
 
-            
+            $isReceiveMessage = Request::instance()->param('isReceiveMessage');
+            $UserModel->UserModel = $isReceiveMessage;
+            $UserModel->save();
             // 成功设置，返回空数组
             return $this->response([]);
 
