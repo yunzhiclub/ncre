@@ -33,6 +33,10 @@ config(function($stateProvider, $urlRouterProvider) {
     .state('notickets', {
         url: '/notickets',
         templateUrl: 'views/notickets.html',
+    })
+    .state('resetcardnum', {
+        url: '/resetcardnum',
+        templateUrl: 'views/resetcardnum.html',
     });
     // .state('home', {
     //     url: '/home',
