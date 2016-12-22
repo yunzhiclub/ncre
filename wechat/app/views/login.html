@@ -3,13 +3,13 @@
         <div class="weui-cell">
             <label class="weui-label">身份证号：</label>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入身份证号"/>
+                <input class="weui-input" ng-model="user.idCardNum" type="text" pattern="[0-9,x]*" placeholder="请输入身份证号"/>
             </div>
         </div>
         <div class="weui-cell weui-cell_switch">
             <div class="weui-cell__bd">接收推送消息</div>
             <div class="weui-cell__ft">
-                <input class="weui-switch" type="checkbox"/>
+                <input class="weui-switch" type="checkbox" checked="checked" ng-model="user.isReceiveMessage" />
             </div>
         </div>
     </div>
