@@ -20,6 +20,7 @@ angular.module('wechatApp')
         var url = config.apiUrl + 'user/';
         // 用户是否登陆
         var isLogin = function() {
+            return false;
             if (typeof getOpenid() === 'undefined') {
                 return false;
             } else if (getOpenid() === '') {
@@ -31,16 +32,16 @@ angular.module('wechatApp')
 
         // 用户登陆
         var login = function() {
-
+            var openid;
             // 获取使用get方式传入openid信息
-            var param = getQueryParams();
-            var openid = param.openid;
-            if (typeof openid === 'undefined') {
-                param = $location.search();
+            if (self.user.openid === '') {
+                var param = $location.search();
                 if (typeof param.openid !== 'undefined') {
                     openid = param.openid;
                 }
-            }     
+            } else {
+                openid = self.user.openid;
+            }   
 
             var callback = $window.location.href;
             if ((typeof openid === 'undefined') || (openid === '')) {
@@ -48,6 +49,7 @@ angular.module('wechatApp')
                 $window.location.href = config.authoUrl + '?callback=' + encodeURIComponent(callback);
             } else {
                 cookies.put('openid', openid);
+                $location.path($location.path()).search({});
             }
             return;
         };
@@ -91,25 +93,6 @@ angular.module('wechatApp')
             }
             return promise;
         };
-
-        
-        // 通过URL获取GET参数
-        function getQueryParams() {
-            var qs = document.location.search;
-            qs = qs.split('+').join(' ');
-
-            var params = {},
-                tokens,
-                re = /[?&]?([^=]+)=([^&]*)/g;
-
-            tokens = re.exec(qs);
-            while (tokens) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-                tokens = re.exec(qs);
-            }
-
-            return params;
-        }
 
         // Public API here
         return {
