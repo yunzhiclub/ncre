@@ -7,7 +7,8 @@ module('wechatApp', [
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ui.router'
+    'ui.router',
+    'angular-loading-bar',
 ]).
 config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
@@ -17,7 +18,7 @@ config(function($stateProvider, $urlRouterProvider) {
         controller:function ($scope, $location) {
             $scope.randomNext = function() {
                 var random = Math.floor(Math.random()*2);
-                if(random == 1){
+                if(random === 1){
                     $location.path('tickets');
                 }
                 else{
@@ -34,6 +35,10 @@ config(function($stateProvider, $urlRouterProvider) {
         url: '/notickets',
         templateUrl: 'views/notickets.html',
     })
+    .state('resetcardnum', {
+        url: '/resetcardnum',
+        templateUrl: 'views/resetcardnum.html',
+    });
     // .state('home', {
     //     url: '/home',
     //     templateUrl: 'views/home.html',
