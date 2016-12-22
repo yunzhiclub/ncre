@@ -35,3 +35,7 @@ Running `grunt test` will run the unit tests with karma.
 
 此时，我们进行入dist文件夹，运行http-server(如未安装,请参考：https://www.npmjs.com/package/http-server 安装)
 如果端口被占用，运行http-server -p 8088（或指定其它端口号）来看压缩合并后的项目效果。
+
+第三方说明文档：
+easywechat: https://easywechat.org/zh-cn/docs/
+angular-loading-bar: https://github.com/chieffancypants/angular-loading-bar

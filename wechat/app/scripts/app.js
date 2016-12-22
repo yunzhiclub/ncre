@@ -7,7 +7,8 @@ module('wechatApp', [
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ui.router'
+    'ui.router',
+    'angular-loading-bar',
 ]).
 config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');

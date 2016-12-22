@@ -57,6 +57,9 @@ class ApiController extends Controller {
         // 设置请求时间，返回
         $result['time'] = $_SERVER['REQUEST_TIME'];
         $type     = $this->getResponseType();
+        $accessControlAllowOrigin = Config::get('api.access_control_allow_origin');
+        $accessControlAllowOrigin = $accessControlAllowOrigin ? $accessControlAllowOrigin : '*';
+        $header['Access-Control-Allow-Origin'] = $accessControlAllowOrigin;
         $response = Response::create($result, $type)->header($header);
         throw new HttpResponseException($response);
     }

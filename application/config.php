@@ -290,4 +290,9 @@ return [
             //'verify' => false, // 关掉 SSL 认证（强烈不建议！！！）
         ],
     ],
+
+    'api' => [
+        // 设置允许的跨域的域名
+        'access_control_allow_origin' => 'http://localhost:9000',
+    ],
 ];
