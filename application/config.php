@@ -293,6 +293,6 @@ return [
 
     'api' => [
         // 设置允许的跨域的域名
-        'access_control_allow_origin' => 'http://localhost:9000',
+        'access_control_allow_origin' => '*',
     ],
 ];

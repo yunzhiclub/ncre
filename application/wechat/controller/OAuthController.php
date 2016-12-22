@@ -7,6 +7,7 @@ use think\Request;
 use think\Session;
 use think\Url;
 use EasyWeChat\Foundation\Application;
+use think\Cookie;
 
 
 class OAuthController extends WechatController {
@@ -27,9 +28,12 @@ class OAuthController extends WechatController {
      * @DateTime 2016-12-21T07:51:33+0800
      */
     public function index() {
+        $callbackUrl = Request::instance()->param('callback');
+        if (is_null($callbackUrl)) {
+            throw new \Exception("do not receive callbackurl");
+        }
+        session('callbackUrl', $callbackUrl);
         if (is_null(Session::get('wechat_user'))) {
-            $callbackUrl = Request::instance()->param('callbackurl');
-            session('callbackUrl', $callbackUrl);
             return $this->app->oauth->redirect();
         } else {
             return $this->redirectToCallbackUrl();
@@ -57,7 +61,7 @@ class OAuthController extends WechatController {
      */
     private function redirectToCallbackUrl() {
         $user = Session::get('wechat_user');
-        $callbackUrl = Session::get('callbackUrl') . '?openid=' . $user['openid'];
+        $callbackUrl = Session::get('callbackUrl') . '?openid=' . $user['id'];
         return $this->redirect($callbackUrl);
     }
 }

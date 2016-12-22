@@ -12,33 +12,27 @@ module('wechatApp', [
 ]).
 config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
-    $stateProvider.state('login', {
+    $stateProvider
+    .state('login', {
         url: '/login',
         templateUrl: 'views/login.html',
-        controller:function ($scope, $location) {
-            $scope.randomNext = function() {
-                var random = Math.floor(Math.random()*2);
-                if(random === 1){
-                    $location.path('tickets');
-                }
-                else{
-                    $location.path('notickets');
-                }
-            };
-        }
+        controller:'LoginCtrl',
     })
     .state('tickets', {
         url: '/tickets',
         templateUrl: 'views/tickets.html',
+        controller:'tickets',
     })
     .state('notickets', {
         url: '/notickets',
         templateUrl: 'views/notickets.html',
-    })
-    .state('resetcardnum', {
-        url: '/resetcardnum',
-        templateUrl: 'views/resetcardnum.html',
     });
+    // // 重置身份证号码
+    // .state('resetcardnum', {
+    //     url: '/resetcardnum',
+    //     templateUrl: 'views/resetcardnum.html',
+    //     controller:'resetcardnum',
+    // });
     // .state('home', {
     //     url: '/home',
     //     templateUrl: 'views/home.html',

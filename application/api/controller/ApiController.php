@@ -23,7 +23,7 @@ class ApiController extends Controller {
         Config::set('default_return_type', 'json');
         
         // 传入的变量类型非法，则置错误码为10002
-        if (!is_numeric($data) && !is_array($data)) {
+        if (!is_numeric($data) && !is_array($data) && !is_object($data)) {
             $code = 10002;
             $this->response($code, $message, $header);
 
@@ -42,7 +42,7 @@ class ApiController extends Controller {
                 $request = Request::instance();
                 $result = [
                     "request"       => $request->url(true),
-                    "error_code"    => $code,
+                    "errorCode"    => $code,
                     "error"         => $this::$errors[$code][0] . ': ' . $this::$errors[$code][1] . ': ' . $message,         
                 ];
 
