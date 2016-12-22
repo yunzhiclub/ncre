@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="educationApp">
-    
+  <body ng-app="wechatApp" ng-controller="MainCtrl">
+        {{awesomeThings}}
       <div ui-view></div>
 
 
@@ -38,6 +38,9 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/services/config.js"></script>
+        <script src="scripts/services/cookies.js"></script>
+        <script src="scripts/services/user.js"></script>
         <!-- endbuild -->
 </body>
 </html>

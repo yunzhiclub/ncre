@@ -338,7 +338,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       dist: {
         options: {
-          module: 'educationApp',
+          module: 'wechatApp',
           htmlmin: '<%= htmlmin.dist.options %>',
           usemin: 'scripts/scripts.js'
         },
@@ -454,7 +454,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'postcss',
     'connect:test',
-    'karma'
+    //'karma'
   ]);
 
   grunt.registerTask('build', [
@@ -478,7 +478,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'newer:jshint',
     'newer:jscs',
-    'test',
+    //'test',
     'build'
   ]);
 };

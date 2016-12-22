@@ -5,9 +5,18 @@ version 0.15.1.
 
 ## Build & development
 使用方法
-使用nodejs安装grunt后，进行本项目目录，运行命令 grunt 完成项目的初始化
-此时，grunt将自动为我们下载开发所有需要node_modules以及项目运行所需要的bower_components
+使用npm install 进行项目的初始化，
+此时，系统自动为我们下载开发所有需要node_modules
 
+## 加载bower package
+运行bower install
+此时，系统将我们自动下载项目运行所需要的bower_components
+
+## grunt 对项目是否满足开发条件进行测试
+运行grunt
+
+
+## 项目阅览
 完成初始化后，运行命令 grunt serve 来阅览项目。
 此时，grunt将为我们运行一系列自动化操作，比如在app\index.html中自动加载bower中依赖的JS文件。
 最后，启动浏览器，并访问本机的9000端口。并自动指向app\index.html
