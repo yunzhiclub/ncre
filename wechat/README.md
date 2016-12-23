@@ -41,14 +41,15 @@ easywechat: https://easywechat.org/zh-cn/docs/
 angular-loading-bar: https://github.com/chieffancypants/angular-loading-bar
 
 ## 本地开发步骤：
-li > 查看本机实IP
-li > 登陆微信测试号管理，并关注该测试号
-li > 设置config.php中的wechat中的appid、secret
-li > 设置config.js中oauthUrl、apiUrl
-li > 设置gruntfile.js中的connect -> options -> hostname
-li > 在wechat目录中，启用grunt serve
-li > 开始apache服务
-li > 在微信开发工具中，访问地址：http://本机IP:9000/!#/
+- 查看本机实IP
+- 登陆微信测试号管理，并关注该测试号
+- 设置config.php中的wechat中的appid、secret
+- 设置config.js中oauthUrl、apiUrl
+- 设置gruntfile.js中的connect -> options -> hostname
+- 在wechat目录中，启用grunt serve
+- 开始apache服务
+- 在微信开发工具中，访问地址：http://本机IP:9000/!#/
 
+> 访问地址必须有后缀必须以上面完全相同。使用 **http://本机IP:9000/** 等格式将引发错误。
 
 
