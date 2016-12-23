@@ -50,7 +50,7 @@ angular.module('wechatApp')
             var callback = $window.location.href;
             if ((typeof openid === 'undefined') || (openid === '')) {
                 // 跳转认证 
-                $window.location.href = config.authoUrl + '?callback=' + encodeURIComponent(callback);
+                $window.location.href = config.oauthUrl + '?callback=' + encodeURIComponent(callback);
             } else {
                 cookies.put('openid', openid);
                 $location.path($location.path()).search({});
