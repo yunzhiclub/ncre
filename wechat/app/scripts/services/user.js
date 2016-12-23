@@ -29,6 +29,11 @@ angular.module('wechatApp')
             }
         };
 
+        // 防止带有OPENID的链接并转发, 清理openid信息
+        var clearOpenidOfParam = function() {
+            $location.path($location.path()).search({});
+        };
+
         // 用户登陆
         var login = function() {
             var openid;
@@ -45,7 +50,7 @@ angular.module('wechatApp')
             var callback = $window.location.href;
             if ((typeof openid === 'undefined') || (openid === '')) {
                 // 跳转认证 
-                $window.location.href = config.authoUrl + '?callback=' + encodeURIComponent(callback);
+                $window.location.href = config.oauthUrl + '?callback=' + encodeURIComponent(callback);
             } else {
                 cookies.put('openid', openid);
                 $location.path($location.path()).search({});
@@ -60,9 +65,12 @@ angular.module('wechatApp')
 
         // 获取用户信息
         var getUser = function() {
+            // 定义promise 解决异步问题
             var deferred = $q.defer();
             var promise = deferred.promise;
-            if ( self.user.openid === '') {
+
+            // 当前user为默认值，则调用$http请求，获取当前user
+            if (self.user.openid === '') {
                 var openid = getOpenid();
                 $http({
                     method: 'GET',
@@ -87,6 +95,8 @@ angular.module('wechatApp')
                     console.log(response);
                     deferred.reject(); //执行失败
                 });
+
+            // 当前user存在，则
             } else {
                 deferred.resolve(self.user); //执行成功
             }
@@ -117,8 +127,7 @@ angular.module('wechatApp')
 
             // 初始化
             init: function() {
-                getUser();
+                clearOpenidOfParam();           // 清理URL中的OPENID，防止链接转发引起的错误
             },
-
         };
     }]);
