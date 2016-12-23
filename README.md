@@ -1,4 +1,5 @@
 ## 项目目录
+~~~
 ├── CONTRIBUTING.md
 ├── LICENSE.txt
 ├── README.md
@@ -15,7 +16,7 @@
 ├── vendor          // 第三方扩展。使用composer install自动安装
 ├── web             // 微信端原型设计
 ├── wechat          // 微信端使用anguarjs搭建的SPA应用
-
+~~~
 ## 本地API开发
 - 登陆微信测试号管理，并关注该测试号
 - 查看微信公众号管理的右侧用户列表，随便找到openid
