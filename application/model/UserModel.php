@@ -50,10 +50,7 @@ class UserModel extends ModelModel {
             // 用获取到的openid初始化对象，并返回
             $User->save();
         }
-            // 数据库中存在，则返回获取到的对象
-            return $User;
-        }
-         
+        // 数据库中存在，则返回获取到的对象
+        return $User;
     }
-
 }
