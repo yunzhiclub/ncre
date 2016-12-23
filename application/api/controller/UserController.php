@@ -10,7 +10,8 @@ class UserController extends ApiController {
         parent::__construct($request);
 
         // 获取用户传入的openid
-        $openid = Request::instance()->param('openid');
+        //$openid = Request::instance()->param('openid');
+        $openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SA';
 
         // 验证openid长度是否符合
         if (!UserModel::checkOpenidLength($openid)) {
@@ -19,6 +20,7 @@ class UserController extends ApiController {
         }
 
         // 获取用户实体
+        
         $UserModel = UserModel::getUserModelByOpenid($openid);
     }
 
@@ -49,6 +51,19 @@ class UserController extends ApiController {
      */
     public function setIsReceiveMessage($isReceiveMessage = 0) {
         try {
+            //检验是否接收推送消息
+            $map = array('is_receivemsg' => $isReceiveMessage);
+            
+            if ('' === UserModel::get($map)) {
+                //对UserModel的is_receivemsg赋值，并保存
+                $isReceiveMessage = 0;
+                $UserModel->is_receivemsg = $isReceiveMessage;
+                $UserModel->save();
+            } else {
+                //返回之前保存过的值
+                $new_UserModel = $UserModel; 
+                return $new_UserModel;
+            }
 
             
             // 成功设置，返回空数组
