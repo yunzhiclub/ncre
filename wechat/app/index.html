@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="zh-hans">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>国家计算机等级考试</title>
     <meta name="description" content="">
@@ -10,18 +11,16 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/weui/dist/style/weui.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="wechatApp" ng-controller="MainCtrl">
-        {{awesomeThings}}
-      <div ui-view></div>
+</head>
 
-
-
+<body ng-app="wechatApp" ng-controller="MainCtrl" class="wechat_container">
+        <div ui-view></div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -32,15 +31,19 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/services/config.js"></script>
-        <script src="scripts/services/cookies.js"></script>
-        <script src="scripts/services/user.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/services/config.js"></script>
+    <script src="scripts/services/cookies.js"></script>
+    <script src="scripts/services/user.js"></script>
+    <script src="scripts/controllers/tickets.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/services/tickets.js"></script>
+    <!-- endbuild -->
 </body>
+
 </html>

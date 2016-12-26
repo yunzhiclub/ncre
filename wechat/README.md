@@ -35,3 +35,21 @@ Running `grunt test` will run the unit tests with karma.
 
 此时，我们进行入dist文件夹，运行http-server(如未安装,请参考：https://www.npmjs.com/package/http-server 安装)
 如果端口被占用，运行http-server -p 8088（或指定其它端口号）来看压缩合并后的项目效果。
+
+第三方说明文档：
+easywechat: https://easywechat.org/zh-cn/docs/
+angular-loading-bar: https://github.com/chieffancypants/angular-loading-bar
+
+## 本地开发步骤：
+- 查看本机实IP
+- 登陆微信测试号管理，并关注该测试号
+- 设置config.php中的wechat中的appid、secret
+- 设置config.js中oauthUrl、apiUrl
+- 设置gruntfile.js中的connect -> options -> hostname
+- 在wechat目录中，启用grunt serve
+- 开始apache服务
+- 在微信开发工具中，访问地址：http://本机IP:9000/!#/
+
+> 访问地址必须有后缀必须以上面完全相同。使用 **http://本机IP:9000/** 等格式将引发错误。
+
+

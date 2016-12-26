@@ -1,100 +1,77 @@
 <div class="page">
     <div class="page__hd">
         <div class="weui-cells weui-cells_form">
-            <p class="page__desc">身份证号：130225199911112222</p>
+            <a class="weui-cell weui-cell_access" ui-sref="login">
+                <div class="weui-cell__bd">
+                    <p>身份证号：<span ng-bind="user.idCardNum"></span></p>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
             <div class="weui-cell weui-cell_switch">
                 <div class="weui-cell__bd">接收推送消息</div>
                 <div class="weui-cell__ft">
-                    <input class="weui-switch" type="checkbox"/>
+                    <input class="weui-switch" type="checkbox" checked="checked" ng-model="user.isReceiveMessage" />
                 </div>
             </div>
         </div>
     </div>
-    <div class="page__bd">
-        <div class="weui-cells__title">查询结果1：</div>
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>姓名：</p>
+    <div class="page__bd" ng-show="loading">
+        <div class="weui-loadmore weui-loadmore_line">
+            <span class="weui-loadmore__tips">暂无数据</span>
+        </div>
+    </div>
+    <div ng-hide="loading">
+        <div class="page__bd" ng-repeat="(key, ticket) in tickets">
+            <div class="weui-cells__title">查询结果1：</div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>姓名：</p>
+                    </div>
+                    <div class="weui-cell__ft">{{ticket.userName}}</div>
                 </div>
-                <div class="weui-cell__ft">张三</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>报考级别：</p>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>报考级别：</p>
+                    </div>
+                    <div class="weui-cell__ft">计算机一级</div>
                 </div>
-                <div class="weui-cell__ft">计算机一级</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>考试科目：</p>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>考试科目：</p>
+                    </div>
+                    <div class="weui-cell__ft">计算机基础及MS Office应用</div>
                 </div>
-                <div class="weui-cell__ft">计算机基础及MS Office应用</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>准考证号：</p>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>准考证号：</p>
+                    </div>
+                    <div class="weui-cell__ft">47120048002119</div>
                 </div>
-                <div class="weui-cell__ft">47120048002119</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>考试地点：</p>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>考试地点：</p>
+                    </div>
+                    <div class="weui-cell__ft">河北工业大学第一考场</div>
                 </div>
-                <div class="weui-cell__ft">河北工业大学第一考场</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>考试时间：</p>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>考试时间：</p>
+                    </div>
+                    <div class="weui-cell__ft">2016年12月10日 10:00-12:00</div>
                 </div>
-                <div class="weui-cell__ft">2016年12月10日 10:00-12:00</div>
             </div>
         </div>
-
-        <div class="weui-cells__title">查询结果2：</div>
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>姓名：</p>
-                </div>
-                <div class="weui-cell__ft">张三</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>报考级别：</p>
-                </div>
-                <div class="weui-cell__ft">计算机一级</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>考试科目：</p>
-                </div>
-                <div class="weui-cell__ft">计算机基础及MS Office应用</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>准考证号：</p>
-                </div>
-                <div class="weui-cell__ft">47120048002119</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>考试地点：</p>
-                </div>
-                <div class="weui-cell__ft">河北工业大学第一考场</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>考试时间：</p>
-                </div>
-                <div class="weui-cell__ft">2016年12月10日 10:00-12:00</div>
+        <div class="weui-msg" ng-show="ticketsEmpty">
+            <div class="weui-msg__icon-area"><i class="weui-icon-info weui-icon_msg"></i></div>
+            <div class="weui-msg__text-area">
+                <p class="weui-msg__desc">系统暂未查询到身份证号为{{user.idCardNum}}在天津各考点的相关信息</p>
             </div>
         </div>
     </div>
-    <!-- <div class="weui-msg__opr-area">
+    <div class="weui-msg__opr-area" ng-hide="loading">
         <p class="weui-btn-area">
-            <a ui-sref="noscore" class="weui-btn weui-btn_primary">确定</a>
+            <button ng-click="reload()" class="weui-btn weui-btn_primary">刷新</button>
         </p>
-    </div> -->
+    </div>
 </div>
-

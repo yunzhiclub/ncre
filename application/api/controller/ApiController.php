@@ -23,7 +23,7 @@ class ApiController extends Controller {
         Config::set('default_return_type', 'json');
         
         // 传入的变量类型非法，则置错误码为10002
-        if (!is_numeric($data) && !is_array($data)) {
+        if (!is_numeric($data) && !is_array($data) && !is_object($data)) {
             $code = 10002;
             $this->response($code, $message, $header);
 
@@ -42,7 +42,7 @@ class ApiController extends Controller {
                 $request = Request::instance();
                 $result = [
                     "request"       => $request->url(true),
-                    "error_code"    => $code,
+                    "errorCode"    => $code,
                     "error"         => $this::$errors[$code][0] . ': ' . $this::$errors[$code][1] . ': ' . $message,         
                 ];
 
@@ -57,6 +57,9 @@ class ApiController extends Controller {
         // 设置请求时间，返回
         $result['time'] = $_SERVER['REQUEST_TIME'];
         $type     = $this->getResponseType();
+        $accessControlAllowOrigin = Config::get('api.access_control_allow_origin');
+        $accessControlAllowOrigin = $accessControlAllowOrigin ? $accessControlAllowOrigin : '*';
+        $header['Access-Control-Allow-Origin'] = $accessControlAllowOrigin;
         $response = Response::create($result, $type)->header($header);
         throw new HttpResponseException($response);
     }
@@ -101,7 +104,7 @@ class ApiController extends Controller {
      * @author 梦云智 http://www.mengyunzhi.com
      * @DateTime 2016-12-21T18:11:45+0800
      */
-    protected function logException($e) {
+    protected function exception($e) {
         // 排除ThinkPHP的HTTP异常
         if ($e instanceof \think\exception\HttpResponseException) {
             throw $e;
