@@ -10,38 +10,58 @@
 module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
+  // 依赖time-grunt组件，每次在进行build时，都会给出详细的压缩时长
   require('time-grunt')(grunt);
 
   // Automatically load required Grunt tasks
+  // 自动开载依赖的grunt任务
   require('jit-grunt')(grunt, {
-    useminPrepare: 'grunt-usemin',
-    ngtemplates: 'grunt-angular-templates',
+    useminPrepare: 'grunt-usemin',      // 替换模型中的标签
+    ngtemplates: 'grunt-angular-templates', // 将angualar的模板文件使用JS形式打包
     //cdnify: 'grunt-google-cdn'
   });
 
   // Configurable paths for the application
+  // 定义应用源代码所在的文件夹
   var appConfig = {
+    // 首先取./bower.json中定义的appPath， 如果不存在，则使用默认值app
     app: require('./bower.json').appPath || 'app',
+    // 最终build项目代码的目标文件夹
     dist: 'dist'
   };
 
   // Define the configuration for all the tasks
+  // 配置gurnt中所有任务
   grunt.initConfig({
 
     // Project settings
+    // yeoman工程设置 -- 取前面我们定义好的appConfig, 主要涉及两项，分别是源文件目录，及目标文件目录
     yeoman: appConfig,
 
     // Watches files for changes and runs tasks based on the changed files
+    // 监视文件列表
     watch: {
+      // 名字是我们自己起的，比如我们要监视bower的变动情况，所以我们更愿意直观的起名为bower.其实你可以起成其它的
       bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep']
+        files: ['bower.json'],    // 监视的文件为bower.json
+        tasks: ['wiredep']        // 如果bower.json有变动，则执行任务wiredep(也是我们在配置信息中定义的一个属性)
       },
       js: {
+        // 这里用到了通配符和变量名
+        // <%= yeoman.app %>指取出yeoman中的app属性
+        // yeoman.app = appConfig.app = require('./bower.json').appPath || 'app',
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all', 'newer:jscs:all'],
+
+        // 执行的任务列表. newer不是任务名，也是grunt-newer插件，插件地址：https://github.com/tschaub/grunt-newer
+        // 官方如下说明：
+        // The newer task will configure another task to run with src files that are 
+        // a) newer than the dest files or 
+        // b) newer than the last successful run (if there are no dest files). 
+        tasks: ['newer:jshint:all', 'newer:jscs:all'],  
+
+        // 执行任务的参数设置
         options: {
-          livereload: '<%= connect.options.livereload %>'
+          livereload: '<%= connect.options.livereload %>' // 待查
         }
       },
       jsTest: {

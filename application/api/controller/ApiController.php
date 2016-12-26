@@ -104,7 +104,7 @@ class ApiController extends Controller {
      * @author 梦云智 http://www.mengyunzhi.com
      * @DateTime 2016-12-21T18:11:45+0800
      */
-    protected function logException($e) {
+    protected function exception($e) {
         // 排除ThinkPHP的HTTP异常
         if ($e instanceof \think\exception\HttpResponseException) {
             throw $e;
