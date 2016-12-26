@@ -53,7 +53,7 @@ angular.module('wechatApp')
                 $window.location.href = config.oauthUrl + '?callback=' + encodeURIComponent(callback);
             } else {
                 cookies.put('openid', openid);
-                $location.path($location.path()).search({});
+                clearOpenidOfParam();
             }
             return;
         };
