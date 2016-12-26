@@ -16,6 +16,7 @@ angular.module('wechatApp')
             openid: '',
             idCardNum: '',
             isReceiveMessage: false,
+            tickets:[1,2],
         };
         var url = config.apiUrl + 'user/';
         // 用户是否登陆
