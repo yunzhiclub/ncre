@@ -7,9 +7,9 @@ use app\wechat\service\UserService;
 
 class UserModel extends ModelModel {
     protected $data = [
-        'openid' => 0,                      // openid
+        'openid' => '',                      // openid
         'id_card_num' => '',                // 身份证号
-        'is_receive_message' => false,      // 是否接收推送消息
+        'is_receive_message' => true,      // 是否接收推送消息
     ];
 
     /**
@@ -42,13 +42,17 @@ class UserModel extends ModelModel {
         $User = $UserModel->where($map)->find();
 
         if (is_null($User)) {
-            // 数据库中不存在，则调用app\wechat\service\UserService\getUserByOpenid;，获取用户的openid基本信息
-            $UserService = new UserService;
-            $user = $UserService->getUserByOpenid($openid);
-            // 将用户的openid信息存在数据表
-            $User->openid = $user['openid'];
-            // 用获取到的openid初始化对象，并返回
-            $User->save();
+            try {
+                // 数据库中不存在，则调用app\wechat\service\UserService\getUserByOpenid;，获取用户的openid基本信息
+                $UserService = new UserService;
+                $user = $UserService->getUserByOpenid($openid);
+                // 将用户的openid信息存在数据表
+                $User->openid = $user['openid'];
+                // 用获取到的openid初始化对象，并返回
+                $User->save();
+            } catch (\Exception $e) {
+                $this->logException($e);
+            }
         }
         // 数据库中存在，则返回获取到的对象
         return $User;
