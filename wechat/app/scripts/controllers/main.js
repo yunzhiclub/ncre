@@ -12,7 +12,7 @@ angular.module('wechatApp')
         // 用户未登录，则进行登录
         if (!user.isLogin()) {
             user.login();
-            return;
+        
             // 用户已登录，进行用户的初始化
         } else {
             user.init();
