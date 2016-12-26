@@ -10,8 +10,8 @@ class UserController extends ApiController {
         parent::__construct($request);
 
         // 获取用户传入的openid
-        //$openid = Request::instance()->param('openid');
-        $openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SA';
+        $openid = Request::instance()->param('openid');
+        //$openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
 
         // 验证openid长度是否符合
         if (!UserModel::checkOpenidLength($openid)) {
@@ -20,8 +20,7 @@ class UserController extends ApiController {
         }
 
         // 获取用户实体
-        
-        $UserModel = UserModel::getUserModelByOpenid($openid);
+        $this->UserModel = UserModel::getUserModelByOpenid($openid);
     }
 
     /**
@@ -32,12 +31,15 @@ class UserController extends ApiController {
      */
     public function setIDCardNumByOpenid($IdCardNum = 0) {
         try {
-            // 获取用户实体
-            $UserModel = UserModel::getUserModelByOpenid($openid);
             // 校验身份证号
-            // 对UserModel的id_card_num赋值，并保存
-
-            
+            if ('' === ($this->UserModel->id_card_num)) {
+                // 对UserModel的id_card_num赋值，并保存
+                $this->UserModel->id_card_num = $IdCardNum;
+                $this->UserModel->save();
+            } else {
+                //返回之前存在的值
+                return $this->UserModel->id_card_num;
+            }     
             // 成功设置，返回空数组
             return $this->response($this->UserModel);
 
@@ -53,26 +55,25 @@ class UserController extends ApiController {
      */
     public function setIsReceiveMessageByOpenid($isReceiveMessage = 0) {
         try {
+            //$openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
 
             // 获取用户实体
             $UserModel = UserModel::getUserModelByOpenid($openid);
-            //检验是否接收推送消息
-            $map = array('is_receivemsg' => $isReceiveMessage);
-            
-            if ('' === UserModel::get($map)) {
-                //对UserModel的is_receivemsg赋值，并保存
-                $isReceiveMessage = 0;
-                $UserModel->is_receivemsg = $isReceiveMessage;
+
+            //检验是否接收推送消息            
+            if (!($UserModel->is_receive_message)) {
+                //对UserModel的is_receive_message赋值，并保存
+                $isReceiveMessage = true;
+                $UserModel->is_receive_message = $isReceiveMessage;
                 $UserModel->save();
             } else {
                 //返回之前保存过的值
                 $new_UserModel = $UserModel; 
-                return $new_UserModel;
+                return $new_UserModel->is_receive_message;
             }
-
             
             // 成功设置，返回空数组
-            return $this->response([]);
+            return $this->response($this->UserModel);
 
         } catch (\Exception $e) {
             $this->exception($e);
