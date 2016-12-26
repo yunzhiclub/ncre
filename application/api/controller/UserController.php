@@ -11,7 +11,7 @@ class UserController extends ApiController {
 
         // 获取用户传入的openid
         //$openid = Request::instance()->param('openid');
-        $openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SA';
+        $openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
 
         // 验证openid长度是否符合
         if (!UserModel::checkOpenidLength($openid)) {
@@ -20,8 +20,7 @@ class UserController extends ApiController {
         }
 
         // 获取用户实体
-        
-        $UserModel = UserModel::getUserModelByOpenid($openid);
+        $this->UserModel = UserModel::getUserModelByOpenid($openid);
     }
 
     /**
@@ -32,14 +31,19 @@ class UserController extends ApiController {
      */
     public function setIDCardNumByOpenid($IdCardNum = 0) {
         try {
-            // 获取用户实体
-            $UserModel = UserModel::getUserModelByOpenid($openid);
             // 校验身份证号
-            // 对UserModel的id_card_num赋值，并保存
-
-            
+            if (('' === ($this->UserModel->id_card_num))||($IdCardNum = 0)) {
+                // 对UserModel的id_card_num赋值，并保存
+                //$IdCardNum = '12321312';
+                $this->UserModel->id_card_num = $IdCardNum;
+                $this->UserModel->save();
+            } else {
+                //返回之前存在的值
+                return $this->UserModel;
+            }     
             // 成功设置，返回空数组
             return $this->response($this->UserModel);
+
 
         } catch (\Exception $e) {
             $this->exception($e);
