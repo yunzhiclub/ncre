@@ -4,6 +4,27 @@ use think\Request;
 use app\model\UserModel;
 
 class UserController extends ApiController {
+    private $UserModel;
+
+    public function __construct(Request $request = null) {
+        parent::__construct($request);
+
+        // 获取用户传入的openid
+        //$openid = Request::instance()->param('openid');
+        $openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SA';
+
+        // 验证openid长度是否符合
+        if (!UserModel::checkOpenidLength($openid)) {
+            $this->response(20002);     // openid长度不正确
+            return;
+        }
+
+        // 获取用户实体
+        
+        $UserModel = UserModel::getUserModelByOpenid($openid);
+    }
+
+>>>>>>> liuxi
     /**
      * 设置身份证号码
      * @param    integer                  $IdCardNum [description]
@@ -33,8 +54,25 @@ class UserController extends ApiController {
      */
     public function setIsReceiveMessageByOpenid($isReceiveMessage = 0) {
         try {
+<<<<<<< HEAD
             // 获取用户实体
             $UserModel = UserModel::getUserModelByOpenid($openid);
+=======
+            //检验是否接收推送消息
+            $map = array('is_receivemsg' => $isReceiveMessage);
+            
+            if ('' === UserModel::get($map)) {
+                //对UserModel的is_receivemsg赋值，并保存
+                $isReceiveMessage = 0;
+                $UserModel->is_receivemsg = $isReceiveMessage;
+                $UserModel->save();
+            } else {
+                //返回之前保存过的值
+                $new_UserModel = $UserModel; 
+                return $new_UserModel;
+            }
+
+>>>>>>> liuxi
             
             // 成功设置，返回空数组
             return $this->response([]);
