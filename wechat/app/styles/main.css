@@ -1,7 +1,17 @@
 body {
-  padding: 0;
+    padding: 0;
 }
 
+// 根容器样式，防晃动，横向100%
+.wechat_container,{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+// loading bar的位置
 #loading-bar-spinner {
     top: 50%;
     left: 50%;
