@@ -24,7 +24,6 @@ class UserController extends ApiController {
         $UserModel = UserModel::getUserModelByOpenid($openid);
     }
 
->>>>>>> liuxi
     /**
      * 设置身份证号码
      * @param    integer                  $IdCardNum [description]
@@ -54,10 +53,9 @@ class UserController extends ApiController {
      */
     public function setIsReceiveMessageByOpenid($isReceiveMessage = 0) {
         try {
-<<<<<<< HEAD
+
             // 获取用户实体
             $UserModel = UserModel::getUserModelByOpenid($openid);
-=======
             //检验是否接收推送消息
             $map = array('is_receivemsg' => $isReceiveMessage);
             
@@ -72,7 +70,6 @@ class UserController extends ApiController {
                 return $new_UserModel;
             }
 
->>>>>>> liuxi
             
             // 成功设置，返回空数组
             return $this->response([]);
