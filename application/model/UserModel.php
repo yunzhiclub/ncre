@@ -7,9 +7,9 @@ use app\wechat\service\UserService;
 
 class UserModel extends ModelModel {
     protected $data = [
-        'openid' => 'oOwB6sy8xNewilVlHzTWh9nf_RFo',     // openid
-        'id_card_num' => '130225198206053333',                            // 身份证号
-        'is_receive_message' => true,                  // 是否接收推送消息
+        'openid' => 0,                      // openid
+        'id_card_num' => '',                // 身份证号
+        'is_receive_message' => false,      // 是否接收推送消息
     ];
 
     /**
@@ -25,6 +25,7 @@ class UserModel extends ModelModel {
         } else {
             return false;
         }
+        
     }
 
     /**
@@ -36,13 +37,20 @@ class UserModel extends ModelModel {
      */
     static public function getUserModelByOpenid($openid = '') {
         // 查找数据库是否存在
-        
-        // 数据库中存在，则返回获取到的对象
-        
-        // 数据库中不存在，则调用app\wechat\service\UserService\getUserByOpenid;，获取用户的openid基本信息
-        // 将用户的openid信息存在数据表
-        // 用获取到的openid初始化对象，并返回
-        return new self;
-    }
+        $UserModel = new UserModel;
+        $map['openid'] = $openid;
+        $User = $UserModel->where($map)->find();
 
+        if (is_null($User)) {
+            // 数据库中不存在，则调用app\wechat\service\UserService\getUserByOpenid;，获取用户的openid基本信息
+            $UserService = new UserService;
+            $user = $UserService->getUserByOpenid($openid);
+            // 将用户的openid信息存在数据表
+            $User->openid = $user['openid'];
+            // 用获取到的openid初始化对象，并返回
+            $User->save();
+        }
+        // 数据库中存在，则返回获取到的对象
+        return $User;
+    }
 }
