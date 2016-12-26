@@ -22,7 +22,7 @@ class UserController extends ApiController {
             return $this->response($this->UserModel);
 
         } catch (\Exception $e) {
-            $this->logException($e);
+            $this->exception($e);
         }
     }
 
@@ -40,7 +40,7 @@ class UserController extends ApiController {
             return $this->response([]);
 
         } catch (\Exception $e) {
-            $this->logException($e);
+            $this->exception($e);
         }
     }
 
@@ -60,7 +60,7 @@ class UserController extends ApiController {
             return $this->response($UserModel);
 
         } catch (\Exception $e) {
-            $this->logException($e);
+            $this->exception($e);
         }
     }
 }
