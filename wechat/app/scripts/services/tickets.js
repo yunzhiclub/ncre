@@ -23,8 +23,9 @@ angular.module('wechatApp')
 
             // 进行http请求
             $http({
-                method: 'GET',
-                url: config.apiUrl + 'Ticket/getTicketsByOpenid/openid/' + user.getOpenid(),
+                method: 'POST',
+                url: config.apiUrl + 'Ticket/getTicketsByIds/',
+                data: { ids: [1, 2] }
             }).then(function successCallback(response) {
                 console.log('获取考场编排信息成功：');
                 console.log(response);
