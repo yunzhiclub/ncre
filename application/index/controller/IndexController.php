@@ -17,17 +17,13 @@ class IndexController extends Controller
                 $row = dbase_get_record_with_names($db, $i);
                 //处理数据...
                 if ($i === 1) {
-                    var_dump($row);
+                    // var_dump($row);
                 }
                 break;
             }
             // dbase_close($db);
-            echo "读取成功";
+            // echo "读取成功";
         }
         return $this->fetch();
-    }
-    public function info()
-    {
-        phpinfo();
     }
 }

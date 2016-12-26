@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>hello</title>
+    <link rel="stylesheet" type="text/css" href="/ncre/public/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/ncre/public/bootstrap/dist/css/style.css">
 </head>
 <body>
-    hello world
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="row banner">
+                <div class="col-md-12 ">
+                    <!-- <img src="bootstrap/dist/img/banner.jpg" /> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <legend>上传考试信息</legend> 
+                <form role="form">
+                    <div class="form-group">
+                        <label for="station">
+                            考场文件：
+                        </label>
+                        <input  id="station" type="file" />
+                    </div>
+                    <div class="form-group">
+                        <label for="score">
+                            成绩文件：
+                        </label>
+                        <input id="score" type="file" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        上传
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="row footer">
+            <div class="col-md-12">
+                <p class="txt">版本：5.1108 建议分辨率：1280×1024（及以上）　|　建议浏览器：IE（9+）、火狐、谷歌</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
