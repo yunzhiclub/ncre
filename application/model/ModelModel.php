@@ -16,12 +16,32 @@ class ModelModel extends Model{
      */
     public function __construct($data = [])
     {
+        // 使用模型中的默认值进行初始化
         if (is_object($data)) {
             $data= get_object_vars($data);
-        } else {
-            $data = $this->data;
+        } else if (empty($data)) {
+            $data = $this->data;            
         }
+
         parent::__construct($data);
+    }
+
+    /**
+     * 对data进行赋值
+     * @param    string                   $key   
+     * @param                       $value 
+     * @author 梦云智 http://www.mengyunzhi.com
+     * @DateTime 2016-12-27T16:42:24+0800
+     */
+    public function setData($name, $value)
+    {
+        // 标记字段更改
+        if (!isset($this->data[$name]) || ($this->data[$name] != $value && !in_array($name, $this->change))) {
+            $this->change[] = $name;
+        }
+        // 设置数据对象属性
+        $this->data[$name] = $value;
+        return $this;
     }
 
 

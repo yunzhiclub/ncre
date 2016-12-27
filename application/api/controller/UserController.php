@@ -26,20 +26,24 @@ class UserController extends ApiController {
 
     /**
      * 设置身份证号码
-     * @param    integer                  $IdCardNum [description]
+     * @param    integer                  $idCardNum [description]
      * @author 梦云智 http://www.mengyunzhi.com
      * @DateTime 2016-12-21T16:51:06+0800
      */
-    public function setIDCardNumByOpenid($IdCardNum = 0) {
+    public function setIDCardNumByOpenid($idCardNum = 0, $openid = '') {
         try {
             // 获取用户实体
             $UserModel = UserModel::getUserModelByOpenid($openid);
-            // 校验身份证号
-            // 对UserModel的id_card_num赋值，并保存
 
-            
-            // 成功设置，返回空数组
-            return $this->response($this->UserModel);
+            // 设置身份证号
+            $UserModel->setData('id_card_num', $idCardNum);
+
+            // 更新数据并进行验证
+            if (false === $UserModel->save()) {
+                return $this->response(20004, $UserModel->getError());
+            } else {
+                return $this->response();
+            }
 
         } catch (\Exception $e) {
             $this->exception($e);
