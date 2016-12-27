@@ -10,6 +10,7 @@ class UserModel extends ModelModel {
         'openid' => '',                      // openid
         'id_card_num' => '',                // 身份证号
         'is_receive_message' => true,      // 是否接收推送消息
+        'tickets_models' => [],             // 一对多
     ];
 
     /**
@@ -38,8 +39,9 @@ class UserModel extends ModelModel {
     static public function getUserModelByOpenid($openid = '') {
         // 查找数据库是否存在
         $UserModel = new UserModel;
+
         $User = $UserModel::get($openid);
-        
+    
         if (is_null($User)) {
             try {
                 // 数据库中不存在，则调用app\wechat\service\UserService\getUserByOpenid;，获取用户的openid基本信息
@@ -50,7 +52,8 @@ class UserModel extends ModelModel {
                 // 用获取到的openid初始化对象，并返回
                 $User = $UserModel->save();
             } catch (\Exception $e) {
-                $this->logException($e);
+
+                throw($e);
             }
         }
         // 数据库中存在，则返回获取到的对象
