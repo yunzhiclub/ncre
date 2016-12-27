@@ -32,13 +32,15 @@ class UserController extends ApiController {
     public function setIDCardNumByOpenid($IdCardNum = 0) {
         try {
             // 校验身份证号
-            if ('' === ($this->UserModel->id_card_num)) {
+            $User = $this->UserModel->getData('id_card_num');
+            if (empty($User)) {
                 // 对UserModel的id_card_num赋值，并保存
                 $this->UserModel->id_card_num = $IdCardNum;
                 $this->UserModel->save();
             } else {
-                //返回之前存在的值
-                return $this->UserModel->id_card_num;
+                //返回之前保存过的值
+                $new_UserModel = $this->UserModel; 
+                return $new_UserModel;
             }     
             // 成功设置，返回空数组
             return $this->response($this->UserModel);
@@ -56,20 +58,17 @@ class UserController extends ApiController {
     public function setIsReceiveMessageByOpenid($isReceiveMessage = 0) {
         try {
             //$openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
-
-            // 获取用户实体
-            $UserModel = UserModel::getUserModelByOpenid($openid);
-
+            $User = $this->UserModel->getData('is_receive_message');
             //检验是否接收推送消息            
-            if (!($UserModel->is_receive_message)) {
+            if (!($User)) {
                 //对UserModel的is_receive_message赋值，并保存
                 $isReceiveMessage = true;
-                $UserModel->is_receive_message = $isReceiveMessage;
-                $UserModel->save();
+                $this->UserModel->is_receive_message = $isReceiveMessage;
+                $this->UserModel->save();
             } else {
                 //返回之前保存过的值
-                $new_UserModel = $UserModel; 
-                return $new_UserModel->is_receive_message;
+                $new_UserModel = $this->UserModel; 
+                return $new_UserModel;
             }
             
             // 成功设置，返回空数组
@@ -90,7 +89,7 @@ class UserController extends ApiController {
     public function getUserByOpenid($openid) {
         try {
             // 获取用户实体
-            $UserModel = UserModel::getUserModelByOpenid($openid);
+            $UserModel = $this->UserModel;
             
             // 成功设置，返回空数组
             return $this->response($UserModel);
