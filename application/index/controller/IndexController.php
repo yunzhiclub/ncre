@@ -3,7 +3,7 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Request;
-use app\model\UploadModel;
+use app\model\ScoreModel;
 class IndexController extends Controller
 {
     // 文件上传提交并读取
@@ -15,27 +15,25 @@ class IndexController extends Controller
 
         foreach ($files as $file ) {
             // 移动到框架应用目录/runtime/uploads/ 目录下
-            $info = $file->move(ROOT_PATH . 'runtime' . DS . 'uploads','');
+            $info = $file->move(ROOT_PATH . 'runtime' . DS . 'uploads');
             // 上传成功则保存文件名
             if ($info) {
                 $item[] = $info->getRealPath();
+                $title = $info->getSaveName();
             } else {
                 // 上传失败获取错误信息
                 $this->error($file->getError());
             }
         }
-        return $this->success('文件上传成功'.implode('<br/>',$item));
-    }
-
-    public function read()
-    {
+        
         // 实例化score
         $ScoreModel = new ScoreModel;
 
         //dbase数据库的地址和文件名
-        $dbf= RUNTIME_PATH.'uploads'. DS . "CJK4712.dbf";
+        $dbf= RUNTIME_PATH.'uploads'. DS . $title;
         $db=dbase_open($dbf,0) or die ("Can not connect to the *.dbf file!");
-
+        $lists= [];
+        $list = [];
         if ($db) {
             //读取dbase数据库的行数
             $record_numbers = dbase_numrecords($db);
@@ -43,24 +41,24 @@ class IndexController extends Controller
             for ($i = 1; $i <= $record_numbers; $i++) {
                 $row = dbase_get_record_with_names($db, $i);
                 //当存在准考证号键时 合并数组
-                if (array_key_exists('ZKZH', $row)) {
-                    $lists= [];
-                    array_push($lists, $row);
-                    // return $lists;
+                if (array_key_exists('ZJH', $row)) {
+                    $list['ZJH'] = $row['ZJH'];
+                    $list['ZKZH'] = $row['ZKZH'];
+                    $list['CJ'] = $row['CJ'];
+                    $list['ZSBH'] = $row['ZSBH'];
+                    array_push($lists, $list);
+                    // return $lists);
                 }
                 if ($i === 4) {
-                    var_dump($lists);
                     break;
                 }
             }
-
+            // var_dump($lists);
             // 将数组循环存储全部
-            foreach ($lists as $list) {
-                if ($ScoreModel->saveAll($list)) {
-                    return "批量保存成功";
-                }else{
-                    return $ScoreModel->getError();
-                }
+            if ($ScoreModel->saveAll($lists)) {
+                return "批量保存成功";
+            }else{
+                return $ScoreModel->getError();
             }
             dbase_close($db);
         }
