@@ -10,8 +10,8 @@ class UserController extends ApiController {
         parent::__construct($request);
 
         // 获取用户传入的openid
-        //$openid = Request::instance()->param('openid');
-        $openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
+        $openid = Request::instance()->param('openid');
+        //$openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
 
         // 验证openid长度是否符合
         if (!UserModel::checkOpenidLength($openid)) {
@@ -20,7 +20,7 @@ class UserController extends ApiController {
         }
 
         // 获取用户实体
-        $this->UserModel = UserModel::getUserModelByOpenid($openid);
+        $UserModel = UserModel::getUserModelByOpenid($openid);
     }
 
     /**
@@ -95,7 +95,7 @@ class UserController extends ApiController {
     public function getUserByOpenid($openid) {
         try {
             // 获取用户实体
-            $UserModel = $this->UserModel;
+            $UserModel = UserModel::getUserModelByOpenid($openid);
             
             // 成功设置，返回空数组
             return $this->response($UserModel);
