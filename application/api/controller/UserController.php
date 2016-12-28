@@ -10,8 +10,8 @@ class UserController extends ApiController {
         parent::__construct($request);
 
         // 获取用户传入的openid
-        $openid = Request::instance()->param('openid');
-        //$openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
+        //$openid = Request::instance()->param('openid');
+        $openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
 
         // 验证openid长度是否符合
         if (!UserModel::checkOpenidLength($openid)) {
@@ -31,17 +31,22 @@ class UserController extends ApiController {
      */
     public function setIDCardNumByOpenid($idCardNum = 0, $openid = '') {
         try {
-            // 获取用户实体
+            // 通过openid取用户模型（实体）信息
             $UserModel = UserModel::getUserModelByOpenid($openid);
+
+            //判断实体信息是否存在
+            if ('' === $UserModel->getData('openid')) {
+                return $this->response(20003);
+            }
 
             // 设置身份证号
             $UserModel->setData('id_card_num', $idCardNum);
-
+            $data['id_card_num'] = $idCardNum;
             // 更新数据并进行验证
-            if (false === $UserModel->save()) {
+            if (false === $UserModel->validate(true)->save($data)) {
                 return $this->response(20004, $UserModel->getError());
             } else {
-                return $this->response();
+                return $this->response([]);
             }
 
         } catch (\Exception $e) {
@@ -54,24 +59,26 @@ class UserController extends ApiController {
      * @author 梦云智 http://www.mengyunzhi.com
      * @DateTime 2016-12-21T18:56:09+0800
      */
-    public function setIsReceiveMessageByOpenid($isReceiveMessage = 0) {
+    public function setIsReceiveMessageByOpenid($isReceiveMessage = 0, $openid = '') {
         try {
-            //$openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
-            $User = $this->UserModel->getData('is_receive_message');
-            //检验是否接收推送消息            
-            if (!($User)) {
-                //对UserModel的is_receive_message赋值，并保存
-                $isReceiveMessage = true;
-                $this->UserModel->is_receive_message = $isReceiveMessage;
-                $this->UserModel->save();
-            } else {
-                //返回之前保存过的值
-                $new_UserModel = $this->UserModel; 
-                return $new_UserModel;
+            // 通过openid取用户模型（实体）信息
+            $UserModel = UserModel::getUserModelByOpenid($openid);
+
+            //判断实体信息是否存在
+            if ('' === $UserModel->getData('openid')) {
+                return $this->response(20003);
             }
-            
-            // 成功设置，返回空数组
-            return $this->response($this->UserModel);
+
+            // 设置推送消息            
+            $UserModel->setData('is_receive_message', $isReceiveMessage);
+            $data['is_receive_message'] = $isReceiveMessage;
+
+            // 更新数据并进行验证
+            if (false === $UserModel->validate(true)->save($data)) {
+                return $this->response(20004, $UserModel->getError());
+            } else {
+                return $this->response([]);
+            }
 
         } catch (\Exception $e) {
             $this->exception($e);
