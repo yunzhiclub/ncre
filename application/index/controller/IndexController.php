@@ -40,15 +40,17 @@ class IndexController extends Controller
             //依次读取每一行数据
             for ($i = 1; $i <= $record_numbers; $i++) {
                 $row = dbase_get_record_with_names($db, $i);
-                //当存在准考证号键时 合并数组
-                if (array_key_exists('ZJH', $row)) {
-                    $list['ZJH'] = $row['ZJH'];
-                    $list['ZKZH'] = $row['ZKZH'];
-                    $list['CJ'] = $row['CJ'];
-                    $list['ZSBH'] = $row['ZSBH'];
-                    array_push($lists, $list);
-                    // return $lists);
+                $keys = ['ZJH', 'ZKZH', 'CJ', 'ZSBH'];
+                foreach ($keys as $key) {
+                    //检查是否存在$key
+                    if (array_key_exists($key, $row)) {
+                        $list[strtolower($key)] = $row[$key];
+                    }
                 }
+                //合并数组
+                array_push($lists, $list);
+
+                // 测试用
                 if ($i === 4) {
                     break;
                 }
