@@ -21,16 +21,11 @@
                 <form method="post" enctype="multipart/form-data" class="form" action="{:url('upload')}">
                     <div class="form-group">
                         <label class="control-label">
-                            成绩文件：
+                            选择文件：
                         </label>
-                        <input class="file" name="file[]" type="file" />
+                        <input class="file" name="file" type="file" />
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">
-                            考场文件：
-                        </label>
-                        <input class="file" name="file[]" type="file" />
-                    </div>
+                    
                     <button type="submit" class="btn btn-primary">
                         上传
                     </button>
