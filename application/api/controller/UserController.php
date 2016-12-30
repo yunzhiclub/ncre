@@ -38,6 +38,9 @@ class UserController extends ApiController {
                 return $this->response(20003);
             }
 
+            if ('' === $idCardNum) {
+                return $this->response(20004, $UserModel->getError());
+            }
             // 设置身份证号
             $UserModel->setData('id_card_num', $idCardNum);
             $data['id_card_num'] = $idCardNum;
