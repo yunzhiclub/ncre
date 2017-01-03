@@ -4,13 +4,17 @@ namespace app\index\controller;
 use think\Db;
 use think\Controller;
 use think\Request;
-use app\model\ScoreModel;
-use app\model\TestRoomModel;
+use think\Config;       // 配置文件
+
+use app\model\ScoreModel;       // 成绩表，生成成绩信息
+use app\model\TicketsModel;     // 考场表，生成准考证信息
 class IndexController extends Controller
 {
     // 文件上传提交并读取
     public function upload(Request $request)
     {
+        // 读取配置信息的uploads路径
+        $uploads = Config::get('uploads');
         // 文件上传
         // 获取表单上传文件
         $file = $request->file('file');
@@ -19,7 +23,7 @@ class IndexController extends Controller
             $this->error('请选择上传文件');
         }
         // 移动到框架应用目录/runtime/uploads/ 目录下
-        $info = $file->move(ROOT_PATH . 'runtime' . DS . 'uploads');
+        $info = $file->move($uploads);
         // 上传成功则保存文件名
         if ($info) {
             $title = $info->getSaveName();
@@ -32,11 +36,13 @@ class IndexController extends Controller
         // 实例化score
         // $ScoreModel = new ScoreModel;
         // 实例化考场testroom
-        $TestRoomModel = new TestRoomModel;
+        $TicketsModel = new TicketsModel;
 
         //dbase数据库的地址和文件名
-        $dbf= RUNTIME_PATH.'uploads'. DS . $title;
+        $dbf= $uploads. DS . $title;
         $db=dbase_open($dbf,0) or die ("Can not connect to the *.dbf file!");
+
+        // 初始化数组
         $lists= [];
         $list = [];
         if ($db) {
@@ -57,15 +63,18 @@ class IndexController extends Controller
                 array_push($lists, $list);
 
             }
-            // 清空数据表
-            $result = Db::execute('TRUNCATE table yunzhi_test_room');
-            // 成绩则存储$ScoreModel
-            if ($TestRoomModel->saveAll($lists)) {
-                return "批量保存成功";
-            }else{
-                return $TestRoomModel->getError();
-            }
+            // 关闭文件
             dbase_close($db);
+            // 清空数据表
+            $yunzhi = Config::get('database.prefix');
+            $result = Db::execute('TRUNCATE table ' .$yunzhi. 'tickets');
+            // 成绩则存储$ScoreModel
+            if ($TicketsModel->saveAll($lists)) {
+                return $this->success("批量保存成功", 'index');
+            }else{
+                return $TicketsModel->getError();
+            }
+            
         }
     }
 
