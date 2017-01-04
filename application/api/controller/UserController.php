@@ -11,7 +11,6 @@ class UserController extends ApiController {
 
         // 获取用户传入的openid
         $openid = Request::instance()->param('openid');
-        //$openid = 'oiz0exAmEEq7SBIjy84XzQ5AO7SB';
 
         // 验证openid长度是否符合
         if (!UserModel::checkOpenidLength($openid)) {
@@ -39,13 +38,19 @@ class UserController extends ApiController {
                 return $this->response(20003);
             }
 
+            if ('' === $idCardNum) {
+                return $this->response(20004, $UserModel->getError());
+            }
             // 设置身份证号
             $UserModel->setData('id_card_num', $idCardNum);
             $data['id_card_num'] = $idCardNum;
+            
             // 更新数据并进行验证
             if (false === $UserModel->validate(true)->save($data)) {
+                // 报错：身份证号码格式不正确
                 return $this->response(20004, $UserModel->getError());
             } else {
+                // 成功设置，返回空数组
                 return $this->response([]);
             }
 
@@ -74,11 +79,10 @@ class UserController extends ApiController {
             $data['is_receive_message'] = $isReceiveMessage;
 
             // 更新数据并进行验证
-            if (false === $UserModel->validate(true)->save($data)) {
-                return $this->response(20004, $UserModel->getError());
-            } else {
-                return $this->response([]);
-            }
+            $UserModel->save($data);
+
+            // 成功设置，返回空数组
+            return $this->response([]);
 
         } catch (\Exception $e) {
             $this->exception($e);
