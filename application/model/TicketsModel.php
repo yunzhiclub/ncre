@@ -4,7 +4,7 @@ namespace app\model;
 /**
 * 考场信息
 */
-class TestRoomModel extends ModelModel
+class TicketsModel extends ModelModel
 {
     
 }
