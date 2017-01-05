@@ -6,5 +6,10 @@ namespace app\model;
 */
 class TicketsModel extends ModelModel
 {
-    
+    static public function getTicketsByIdCardNum($idcardnum)
+    {
+        $map['zjh'] = $idcardnum;
+        $Tickets = TicketsModel::get($map);
+        return $Tickets;
+    }
 }
