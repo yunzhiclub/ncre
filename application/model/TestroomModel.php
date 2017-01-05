@@ -2,7 +2,7 @@
 namespace app\model;
 use think\Db;
 /**
-* 连接数据库
+* 连接sql server数据库
 */
 class TestroomModel extends ModelModel
 {
