@@ -1,6 +1,7 @@
 <?php
 namespace app\model;
 use think\Db;
+use app\model\TicketsModel;     // 准考证信息表
 /**
 * 连接sql server数据库
 */
@@ -28,4 +29,45 @@ class TestroomModel extends ModelModel
         // 数据库表前缀
         'prefix'      => 'dbo.',
     ];
+
+    /**
+     * [getAddressByKch 通过考场号获取考场名称]
+     * @Author   litian,                  1181551049@qq.com
+     * @DateTime 2017-01-05T15:01:38+0800
+     * @param    [string]                   [考场号]
+     * @return   [array]                   [考场名称]
+     */
+    public function getAddressByKch($kch='')
+    {
+        // 获取到考场号
+        $kchs = $this->getKchByIdCardNum('140602199012109044');
+
+        // 初始化数组
+        $map = [];
+        $addresses = [];
+
+        foreach ($kchs as $kch) {
+            $map['code'] = $kch;
+            // 根据考场号获取考场名称
+            $addresses[] = TestroomModel::get($map)->getData('ADDRESS');
+        }
+        return $addresses;
+    }
+    /**
+     * [getKchByIdCardNum 根据身份证号获取考场号]
+     * @Author   litian,                  1181551049@qq.com
+     * @DateTime 2017-01-05T15:16:42+0800
+     * @param    [string]                   $idcardnum        [身份证号]
+     * @return   [array]                                     [考场号]
+     */
+    public function getKchByIdCardNum($idcardnum)
+    {
+        // 根据身份证号获取到准考证数组
+        $Tickets = TicketsModel::getTicketByIdCardNum($idcardnum);
+        $kchs = [];
+        foreach ($Tickets as $Ticket) {
+            $kchs[] = $Ticket->getData('kch');
+        }
+        return $kchs;
+    }
 }
