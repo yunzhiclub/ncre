@@ -37,17 +37,14 @@ class TestroomModel extends ModelModel
      * @param    [string]                   [考场号]
      * @return   [array]                   [考场名称]
      */
-    public function getAddressByKch($kch='')
+    public function getAddressByExmRoomNums($exmroomnums='')
     {
-        // 获取到考场号
-        $kchs = $this->getKchByIdCardNum('140602199012109044');
-
         // 初始化数组
         $map = [];
         $addresses = [];
 
-        foreach ($kchs as $kch) {
-            $map['code'] = $kch;
+        foreach ($exmroomnums as $exmroomnum) {
+            $map['code'] = $exmroomnum;
             // 根据考场号获取考场名称
             $addresses[] = TestroomModel::get($map)->getData('ADDRESS');
         }
@@ -60,14 +57,14 @@ class TestroomModel extends ModelModel
      * @param    [string]                   $idcardnum        [身份证号]
      * @return   [array]                                     [考场号]
      */
-    public function getKchByIdCardNum($idcardnum)
+    public function getExmRoomNumsByIdCardNum($idcardnum)
     {
         // 根据身份证号获取到准考证数组
         $Tickets = TicketsModel::getTicketByIdCardNum($idcardnum);
-        $kchs = [];
+        $exmroomnums = [];
         foreach ($Tickets as $Ticket) {
-            $kchs[] = $Ticket->getData('kch');
+            $exmroomnums[] = $Ticket->getData('kch');
         }
-        return $kchs;
+        return $exmroomnums;
     }
 }

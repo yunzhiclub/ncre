@@ -8,10 +8,5 @@ use app\model\TicketsModel;     // 准考证信息表
 */
 class TestroomController extends Controller
 {
-    public function index()
-    {
-        $TestroomModel = new TestroomModel;
-        $kcname = $TestroomModel->getAddressByKch();
-        var_dump($kcname);
-    }
+    
 }
