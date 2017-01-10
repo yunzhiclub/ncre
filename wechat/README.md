@@ -48,7 +48,7 @@ angular-loading-bar: https://github.com/chieffancypants/angular-loading-bar
 - 设置gruntfile.js中的connect -> options -> hostname
 - 在wechat目录中，启用grunt serve
 - 开始apache服务
-- 在微信开发工具中，访问地址：http://本机IP:9000/!#/
+- 在微信开发工具中，访问地址：http://本机IP:9000/#!/
 
 > 访问地址必须有后缀必须以上面完全相同。使用 **http://本机IP:9000/** 等格式将引发错误。
 
