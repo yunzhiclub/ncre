@@ -51,7 +51,8 @@ class IndexController extends Controller
             //依次读取每一行数据
             for ($i = 1; $i <= $record_numbers; $i++) {
                 $row = dbase_get_record_with_names($db, $i);
-                $keys = ['ZJH', 'ZKZH', 'KCH', 'PCH'];
+                $row['XM'] = trim(iconv('GBK','UTF-8',$row['XM']));
+                $keys = ['XM', 'ZJH', 'ZKZH', 'KCH', 'PCH'];
                 // $keys = ['ZJH', 'ZKZH', 'CJ', 'ZSBH'];
                 foreach ($keys as $key) {
                     //检查是否存在$key

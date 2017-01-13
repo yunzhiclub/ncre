@@ -37,7 +37,7 @@ class TestroomModel extends ModelModel
      * @param    [string]                   [考场号]
      * @return   [array]                   [考场名称]
      */
-    public function getAddressByExmRoomNums($exmroomnums='')
+    static public function getAddressByExmRoomNums($exmroomnums='')
     {
         // 初始化数组
         $map = [];
@@ -57,7 +57,7 @@ class TestroomModel extends ModelModel
      * @param    [string]                   $idcardnum        [身份证号]
      * @return   [array]                                     [考场号]
      */
-    public function getExmRoomNumsByIdCardNum($idcardnum)
+    static public function getExmRoomNumsByIdCardNum($idcardnum)
     {
         // 根据身份证号获取到准考证数组
         $Tickets = TicketsModel::getTicketByIdCardNum($idcardnum);
