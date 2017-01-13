@@ -30,22 +30,21 @@ class SubjectModel extends ModelModel
         'prefix'      => 'dbo.',
     ];
     /**
-     * [getSubjectNameByTicketNum 通过准考证号获取考试科目名称]
+     * [getSubjectByTicketNum 通过准考证号获取考试科目名称]
      * @Author   litian,                  1181551049@qq.com
      * @DateTime 2017-01-13T14:20:16+0800
      * @param    [array]                   $ticketNums       [准考证号]
      * @return   [array]                                     [科目名称]
      */
-    static function getSubjectNameByTicketNum($ticketNums)
+    static function getSubjectByTicketNum($ticketNums)
     {
         $SubjectModel = new SubjectModel;
-        $SubjectNames = [];
+        $Subjects = [];
         foreach ($ticketNums as $ticketNum) {
             $code['code'] = substr($ticketNum, 0, 2);
-            $Subject = $SubjectModel::get($code);
-            $SubjectNames[] = $Subject->getData('NAME');
+            $Subjects[] = $SubjectModel::get($code);
         }
         
-        return $SubjectNames;
+        return $Subjects;
     }
 }
