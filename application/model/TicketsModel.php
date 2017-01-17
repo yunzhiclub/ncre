@@ -17,7 +17,10 @@ class TicketsModel extends ModelModel
     {
         $map = [];
         $map['zjh'] = $idcardnum;
-        $Tickets = TicketsModel::all($map);
+        $TicketModels = TicketsModel::all($map);
+        foreach ($TicketModels as $TicketModel) {
+            $Tickets[] = $TicketModel->getData();
+        }
         return $Tickets;
     }
 }
