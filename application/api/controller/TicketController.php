@@ -23,41 +23,37 @@ class TicketController extends ApiController {
         // 输入的身份证号
         $idcardnum = $ids;
 
-        // 获取学生姓名\准考证号\批次号
+        // 获取ticket
         $TicketsModel = new TicketsModel;
         $Tickets = $TicketsModel::getTicketByIdCardNum($idcardnum);
-        $userName = [];
         $ticketNums = [];
         foreach ($Tickets as $Ticket) {
-            $userName[] = $Ticket['xm'];
             $ticketNums[] = $Ticket['zkzh'];
         }
 
-        // 获取考试地点
+        // 获取testroom
         $TestroomModel = new TestroomModel;
         $exmroomnums = $TestroomModel::getExmRoomNumsByIdCardNum($idcardnum);
-        $addresses = $TestroomModel::getAddressByExmRoomNums($exmroomnums);
-        // 获取考试科目
+        $TestRooms = $TestroomModel::getTestRoomByExmRoomNums($exmroomnums);
+
+        // 获取subject
         $SubjectModel = new SubjectModel;
         $Subjects = $SubjectModel::getSubjectByTicketNum($ticketNums);
-        $SubjectNames = [];
-        $timeLongs = [];
-        foreach ($Subjects as $Subject) {
-            $SubjectNames[] = $Subject->getData('NAME');
-            $timeLongs[] = $Subject->getData('TESTTIME2');
-        }
-        // 获取考试时间
+
+        // 获取testroomopen
         $TestroomopenModel = new TestroomopenModel;
-        $exmTimes = $TestroomopenModel::getExmTimeByIdCardNum($idcardnum);
-        // 示例返回数据如下：
-        $data = [
-            'userName' => $userName,
-            ['SubjectName' => $SubjectNames],
-            ['ticketNum' => $ticketNums],
-            ['addresses' => $addresses],
-            ['exmTime' => $exmTimes],
-            ['timeLongs' => $timeLongs]
-        ];
+        $Testroomopens = $TestroomopenModel::getTestRoomOpenByIdCardNum($idcardnum);
+
+        // 返回数组
+        $data = array();
+        foreach ($Tickets as $key => $Ticket) {
+            $data[$key]['userName'] = $Ticket['xm'];
+            $data[$key]['address'] = $TestRooms[$key]['ADDRESS'];
+            $data[$key]['exmTime'] = rtrim(rtrim($Testroomopens[$key]['BEGINTIME'], '0'), '.');
+            $data[$key]['SubjectName'] = $Subjects[$key]['NAME'];
+            $data[$key]['timeLong'] = $Subjects[$key]['TESTTIME2'];
+        }
+        
         return $this->response($data);
     }
 }
