@@ -35,22 +35,24 @@ class TestroomopenModel extends ModelModel
      * @Author   litian,                  1181551049@qq.com
      * @DateTime 2017-01-13T14:20:16+0800
      * @param    [array]                   $ticketNums       [准考证号]
-     * @return   [array]                                     [科目名称]
+     * @return   [array]                                     [考场数组]
      */
-    static function getExmTimeByIdCardNum($idcardnum)
+    static function getTestRoomOpenByIdCardNum($idcardnum)
     {
         // 根据身份证信息获取tickersmodel
         $TicketsModel = new TicketsModel;
         $Tickets = TicketsModel::getTicketByIdCardNum($idcardnum);
-        $exmTimes = [];
         foreach ($Tickets as $Ticket) {
             // 考场号和批次号
-            $batche = $Ticket->pch;
-            $exmroomnum = $Ticket->kch;
+            $batche = $Ticket['pch'];
+            $exmroomnum = $Ticket['kch'];
             $map = array('SEQ' => $batche, 'TR_CODE' => $exmroomnum);
-            // 根据考场和批次号获取考试时间
-            $exmTimes[] = rtrim(rtrim(TestroomopenModel::get($map)->getData('BEGINTIME'), '0'), '.');
+            // 根据考场和批次号获取testroomModel
+            $TestroomopenModels = TestroomopenModel::all($map);
+            foreach ($TestroomopenModels as $TestroomopenModel) {
+                $Testroomopens[] = $TestroomopenModel->getData();
+            }
         }
-        return $exmTimes;
+        return $Testroomopens;
     }
 }
