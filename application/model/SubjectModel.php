@@ -34,7 +34,7 @@ class SubjectModel extends ModelModel
      * @Author   litian,                  1181551049@qq.com
      * @DateTime 2017-01-13T14:20:16+0800
      * @param    [array]                   $ticketNums       [准考证号]
-     * @return   [array]                                     [科目名称]
+     * @return   [array]                                     [科目数组]
      */
     static function getSubjectByTicketNum($ticketNums)
     {
@@ -42,7 +42,7 @@ class SubjectModel extends ModelModel
         $Subjects = [];
         foreach ($ticketNums as $ticketNum) {
             $code['code'] = substr($ticketNum, 0, 2);
-            $Subjects[] = $SubjectModel::get($code);
+            $Subjects[] = $SubjectModel::get($code)->getData();
         }
         
         return $Subjects;
