@@ -39,6 +39,7 @@ class TestroomopenModel extends ModelModel
      */
     static function getTestRoomOpenByIdCardNum($idcardnum)
     {
+        $Testroomopens = [];
         // 根据身份证信息获取tickersmodel
         $TicketsModel = new TicketsModel;
         $Tickets = TicketsModel::getTicketByIdCardNum($idcardnum);
