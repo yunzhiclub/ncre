@@ -16,6 +16,7 @@ class TicketsModel extends ModelModel
     static public function getTicketByIdCardNum($idcardnum)
     {
         $map = [];
+        $Tickets = [];
         $map['zjh'] = $idcardnum;
         $TicketModels = TicketsModel::all($map);
         foreach ($TicketModels as $TicketModel) {

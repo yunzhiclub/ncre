@@ -31,23 +31,23 @@ class TestroomController extends Controller
         foreach ($Tickets as $Ticket) {
             $ticketNums[] = $Ticket['zkzh'];
         }
-        var_dump($Tickets);
+        
 
         // 获取testroom
         $TestroomModel = new TestroomModel;
         $exmroomnums = $TestroomModel::getExmRoomNumsByIdCardNum($idcardnum);
         $TestRooms = $TestroomModel::getTestRoomByExmRoomNums($exmroomnums);
-        var_dump($TestRooms);
+
 
         // 获取subject
         $SubjectModel = new SubjectModel;
         $Subjects = $SubjectModel::getSubjectByTicketNum($ticketNums);
-        var_dump($Subjects);
+
 
         // 获取testroomopen
         $TestroomopenModel = new TestroomopenModel;
         $Testroomopens = $TestroomopenModel::getTestRoomOpenByIdCardNum($idcardnum);
-        var_dump($Testroomopens);
+
 
         // 返回数组
         $result = array();

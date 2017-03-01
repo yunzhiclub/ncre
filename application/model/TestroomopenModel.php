@@ -14,7 +14,7 @@ class TestroomopenModel extends ModelModel
         // 数据库连接DSN配置
         'dsn'         => '',
         // 服务器地址
-        'hostname'    => '192.168.0.143',
+        'hostname'    => '192.168.0.132',
         // 数据库名
         'database'    => 'EMS',
         // 数据库用户名
@@ -39,6 +39,7 @@ class TestroomopenModel extends ModelModel
      */
     static function getTestRoomOpenByIdCardNum($idcardnum)
     {
+        $Testroomopens = [];
         // 根据身份证信息获取tickersmodel
         $TicketsModel = new TicketsModel;
         $Tickets = TicketsModel::getTicketByIdCardNum($idcardnum);

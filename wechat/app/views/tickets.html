@@ -22,7 +22,7 @@
     </div>
     <div ng-hide="loading">
         <div class="page__bd" ng-repeat="(key, ticket) in tickets">
-            <div class="weui-cells__title">查询结果1：</div>
+            <div class="weui-cells__title">查询结果：</div>
             <div class="weui-cells">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
@@ -34,25 +34,31 @@
                     <div class="weui-cell__bd">
                         <p>考试科目：</p>
                     </div>
-                    <div class="weui-cell__ft">计算机基础及MS Office应用</div>
+                    <div class="weui-cell__ft">{{ticket.SubjectName}}</div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <p>准考证号：</p>
                     </div>
-                    <div class="weui-cell__ft">47120048002119</div>
+                    <div class="weui-cell__ft">{{ticket.userName}}</div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <p>考试地点：</p>
                     </div>
-                    <div class="weui-cell__ft">河北工业大学第一考场</div>
+                    <div class="weui-cell__ft">{{ticket.address}}</div>
                 </div>
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
                         <p>考试时间：</p>
                     </div>
-                    <div class="weui-cell__ft">2016年12月10日 10:00-12:00</div>
+                    <div class="weui-cell__ft">{{ticket.exmTime}}</div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>考试时长：</p>
+                    </div>
+                    <div class="weui-cell__ft">{{ticket.timeLong}} 分钟</div>
                 </div>
             </div>
         </div>
