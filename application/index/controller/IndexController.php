@@ -35,6 +35,7 @@ class IndexController extends Controller
         // 清空数据表
         $yunzhi = Config::get('database.prefix');
         $result = Db::execute('TRUNCATE table ' .$yunzhi. 'tickets');
+
         // 实例化考场testroom
         $TicketsModel = new TicketsModel;
 
@@ -64,27 +65,16 @@ class IndexController extends Controller
                 //合并数组
                 array_push($lists, $list);
 
-                $limit = $record_numbers % 1000;
-                if($i == $limit){
+                if ($i % 1000 === 0) {
                     $TicketsModel->saveAll($lists);
                     unset($lists);
                     $lists = [];
                 }
-                if (($i - $limit) > 0) {
-                    if (($i - $limit) % 1000 === 0) {
-                        var_dump($i);
-                        $TicketsModel->saveAll($lists);
-                        unset($lists);
-                        $lists = [];
-                    }
-                }
-                
-
             }
+            $TicketsModel->saveAll($lists);
             // 关闭文件
             dbase_close($db);
-            // 成绩则存储$ScoreModel
-            die();
+            // 成功则跳转
             if ($TicketsModel->saveAll($lists)) {
                 return $this->success("批量保存成功", 'index');
             }else{
