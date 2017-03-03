@@ -32,9 +32,10 @@ class IndexController extends Controller
             $this->error($file->getError());
         }
         
-        // 文件读取
-        // 实例化score
-        // $ScoreModel = new ScoreModel;
+        // 清空数据表
+        $yunzhi = Config::get('database.prefix');
+        $result = Db::execute('TRUNCATE table ' .$yunzhi. 'tickets');
+
         // 实例化考场testroom
         $TicketsModel = new TicketsModel;
 
@@ -48,10 +49,11 @@ class IndexController extends Controller
         if ($db) {
             //读取dbase数据库的行数
             $record_numbers = dbase_numrecords($db);
+            var_dump($record_numbers);
             //依次读取每一行数据
             for ($i = 1; $i <= $record_numbers; $i++) {
                 $row = dbase_get_record_with_names($db, $i);
-                $row['XM'] = trim(iconv('GBK','UTF-8',$row['XM']));
+                $row['XM'] = trim(iconv('GBK','UTF-8//ignore',$row['XM']));
                 $keys = ['XM', 'ZJH', 'ZKZH', 'KCH', 'PCH'];
                 // $keys = ['ZJH', 'ZKZH', 'CJ', 'ZSBH'];
                 foreach ($keys as $key) {
@@ -63,13 +65,16 @@ class IndexController extends Controller
                 //合并数组
                 array_push($lists, $list);
 
+                if ($i % 1000 === 0) {
+                    $TicketsModel->saveAll($lists);
+                    unset($lists);
+                    $lists = [];
+                }
             }
+            $TicketsModel->saveAll($lists);
             // 关闭文件
             dbase_close($db);
-            // 清空数据表
-            $yunzhi = Config::get('database.prefix');
-            $result = Db::execute('TRUNCATE table ' .$yunzhi. 'tickets');
-            // 成绩则存储$ScoreModel
+            // 成功则跳转
             if ($TicketsModel->saveAll($lists)) {
                 return $this->success("批量保存成功", 'index');
             }else{
