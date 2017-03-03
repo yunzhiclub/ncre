@@ -16,16 +16,16 @@ angular.module('wechatApp')
          * @author 梦云智 http://www.mengyunzhi.com
          * @DateTime 2016-12-23T14:13:20+0800
          */
-        var getTickets = function() {
+        var getTickets = function(idCardNum) {
             // 定义promise 解决异步问题
             var deferred = $q.defer();
             var promise = deferred.promise;
 
             // 进行http请求
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: config.apiUrl + 'Ticket/getTicketsByIds/',
-                data: { ids: [1, 2] }
+                params: { ids: idCardNum}
             }).then(function successCallback(response) {
                 console.log('获取考场编排信息成功：');
                 console.log(response);
@@ -55,8 +55,8 @@ angular.module('wechatApp')
         // Public API here
         return {
             // 获取考场编排信息
-            getTickets: function(callback) {
-                return getTickets().then(function success(tickets) {
+            getTickets: function(callback, idCardNum) {
+                return getTickets(idCardNum).then(function success(tickets) {
                     callback(tickets);
                 }, function error(response) {
                   console.log('获取考场编排信息失败');

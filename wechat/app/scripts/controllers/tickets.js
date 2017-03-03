@@ -12,7 +12,7 @@ angular.module('wechatApp')
         $scope.tickets = [];                // 考场编排信息
         $scope.loading = true;              // 是否正在加载数据，数据加载过程中，隐藏考场编排信息
         $scope.ticketsEmpty = false;        // 考场编排信息是否为空。为空则显示 未获取到相关数据 的提示界面
-
+        var idCardNum = $scope.user.idCardNum;
         // 对user进行监视，实时的获取考场编排信息
         $scope.$watch('user', function() {
             reload();
@@ -35,7 +35,7 @@ angular.module('wechatApp')
 
                     // 数据加载完毕
                     $scope.loading = false;
-                });
+                }, idCardNum);
             }
         };
 

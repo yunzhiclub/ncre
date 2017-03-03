@@ -48,6 +48,7 @@ class TicketController extends ApiController {
         $data = array();
         foreach ($Tickets as $key => $Ticket) {
             $data[$key]['userName'] = $Ticket['xm'];
+            $data[$key]['ticketNum'] = $Ticket['zkzh'];
             $data[$key]['address'] = $TestRooms[$key]['ADDRESS'];
             $data[$key]['exmTime'] = rtrim(rtrim($Testroomopens[$key]['BEGINTIME'], '0'), '.');
             $data[$key]['SubjectName'] = $Subjects[$key]['NAME'];

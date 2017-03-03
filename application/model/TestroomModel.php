@@ -13,7 +13,7 @@ class TestroomModel extends ModelModel
         // 数据库连接DSN配置
         'dsn'         => '',
         // 服务器地址
-        'hostname'    => '192.168.0.143',
+        'hostname'    => '192.168.0.132',
         // 数据库名
         'database'    => 'EMS',
         // 数据库用户名
